@@ -6,6 +6,7 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
+import { axiosWithAuth } from '../axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -39,8 +40,22 @@ export default function App() {
     // to the Articles screen. Don't forget to turn off the spinner!
     setMessage('');
     setSpinnerOn(true);
-    
+    axiosWithAuth()
+    .post('http://localhost:9000/api/login', { username, password })
+      .then(res => {
+        const token = res.data.token; 
+  
+        setMessage(res.data.message);
+        localStorage.setItem('token', token);
+        setSpinnerOn(false);
+        navigate('/articles');
+        console.log(token)
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
+  
 
   const getArticles = () => {
     // ✨ implement
@@ -51,6 +66,8 @@ export default function App() {
     // If something goes wrong, check the status of the response:
     // if it's a 401 the token might have gone bad, and we should redirect to login.
     // Don't forget to turn off the spinner!
+    setMessage('');
+    axios.get()
   }
 
   const postArticle = article => {
@@ -72,8 +89,8 @@ export default function App() {
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner />
-      <Message />
+      <Spinner on={spinnerOn} />
+      <Message message={message}/>
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
         <h1>Advanced Web Applications</h1>
@@ -82,7 +99,7 @@ export default function App() {
           <NavLink id="articlesScreen" to="/articles">Articles</NavLink>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
               <ArticleForm />
