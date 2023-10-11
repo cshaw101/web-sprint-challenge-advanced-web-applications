@@ -102,6 +102,28 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
+    setMessage('')
+    setSpinnerOn(true);
+    const token = localStorage.getItem("token")
+    axiosWithAuth()
+    .post(articlesUrl, article, {
+      headers: {
+        Authorization: token,
+      }
+    })
+    .then((res) => {
+      setArticles([...articles, res.data.article])
+      setMessage(res.data.message)
+      setSpinnerOn(false)
+      console.log(article)
+      
+    })
+    .catch(err => {
+      console.error(err)
+      setSpinnerOn(false)
+    })
+
+    
   }
 
   const updateArticle = ({ article_id, article }) => {
