@@ -5,9 +5,7 @@ import PT from 'prop-types'
 export default function Articles({
   articles,
   getArticles,
-  deleteArticle,
-  setCurrentArticleId,
-  currentArticleId,
+ 
 }) {
 
   const navigate = useNavigate()
