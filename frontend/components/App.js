@@ -54,6 +54,7 @@ export default function App() {
       .catch(err => {
         console.error(err);
       });
+      
   }
   
 
@@ -67,7 +68,26 @@ export default function App() {
     // if it's a 401 the token might have gone bad, and we should redirect to login.
     // Don't forget to turn off the spinner!
     setMessage('');
-    axios.get()
+    setSpinnerOn(true);
+    const token = localStorage.getItem("token")
+    axiosWithAuth()
+    .get(articlesUrl, {
+      headers: {
+        Authorization: token
+      }
+    })
+    .then(res => {
+      setArticles(res.data.articles)
+      setMessage(res.data.message)
+    })
+    .catch(err => {
+      if(err && err === 401) {
+        navigate('/')
+      }
+    })
+
+    setSpinnerOn(false)
+    
   }
 
   const postArticle = article => {
@@ -102,8 +122,15 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
-              <Articles />
+              <ArticleForm postArticle={postArticle}
+               updateArticle={updateArticle}
+                setCurrentArticleId={setCurrentArticleId} />
+
+
+              <Articles articles={articles} 
+              deleteArticle={deleteArticle} 
+              setCurrentArticleId={setCurrentArticleId}
+              getArticles={getArticles} />
             </>
           } />
         </Routes>
