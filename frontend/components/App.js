@@ -21,8 +21,8 @@ export default function App() {
 
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
-  const redirectToLogin = () => { /* ✨ implement */ }
-  const redirectToArticles = () => { /* ✨ implement */ }
+  const redirectToLogin = () => { navigate('/')}
+  const redirectToArticles = () => { navigate('/articles') }
 
   const logout = () => {
     // ✨ implement
@@ -130,7 +130,27 @@ export default function App() {
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
-    
+    setMessage('')
+    setSpinnerOn(true)
+    const token = localStorage.getItem("token")
+
+    axiosWithAuth()
+    .put(`http://localhost:9000/api/articles/${article_id}`, article, {
+      headers: {
+        Authorization: token
+      }
+    })
+    .then(res => {
+
+      console.log(res.data)
+      setMessage(res.data.message)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+    .finally(() => {
+      setSpinnerOn(false)
+    })
   }
 
   const deleteArticle = article_id => {
