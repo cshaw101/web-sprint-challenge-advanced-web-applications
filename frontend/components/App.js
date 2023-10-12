@@ -15,7 +15,8 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticleId, setCurrentArticleId] = useState(null)
+  const [currentArticle, setCurrentArticle] = useState(null)
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -129,6 +130,7 @@ export default function App() {
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+    
   }
 
   const deleteArticle = article_id => {
@@ -153,12 +155,14 @@ export default function App() {
             <>
               <ArticleForm postArticle={postArticle}
                updateArticle={updateArticle}
-                setCurrentArticleId={setCurrentArticleId} />
+                setCurrentArticleId={setCurrentArticle}
+                currentArticle={currentArticle}
+                 />
 
 
               <Articles articles={articles} 
               deleteArticle={deleteArticle} 
-              setCurrentArticleId={setCurrentArticleId}
+              setCurrentArticleId={setCurrentArticle}
               getArticles={getArticles} />
             </>
           } />

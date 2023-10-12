@@ -5,6 +5,7 @@ import PT from 'prop-types'
 export default function Articles({
   articles,
   getArticles,
+  setCurrentArticleId
  
 }) {
 
@@ -25,6 +26,9 @@ export default function Articles({
     }
   },[])
 
+
+  
+
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
@@ -42,7 +46,7 @@ export default function Articles({
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={true} onClick={Function.prototype}>Edit</button>
+                  <button disabled={false}  onClick={() => setCurrentArticleId(art)}>Edit</button>
                   <button disabled={true} onClick={Function.prototype}>Delete</button>
                 </div>
               </div>
