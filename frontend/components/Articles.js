@@ -5,7 +5,9 @@ import PT from 'prop-types'
 export default function Articles({
   articles,
   getArticles,
-  setCurrentArticleId
+  setCurrentArticleId,
+  deleteArticle,
+
  
 }) {
 
@@ -46,8 +48,9 @@ export default function Articles({
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false}  onClick={() => setCurrentArticleId(art)}>Edit</button>
-                  <button disabled={true} onClick={Function.prototype}>Delete</button>
+                  <button onClick={() => setCurrentArticleId(art)}>Edit</button>
+                  <button onClick={() => deleteArticle(art.article_id)}>Delete</button>
+
                 </div>
               </div>
             )

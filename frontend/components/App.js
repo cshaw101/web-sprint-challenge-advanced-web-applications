@@ -134,8 +134,29 @@ export default function App() {
   }
 
   const deleteArticle = article_id => {
-    // ✨ implement
+    setMessage('');
+    setSpinnerOn(true);
+    const token = localStorage.getItem("token");
+  
+    axiosWithAuth()
+      .delete(`http://localhost:9000/api/articles/${article_id}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(res => {
+        console.log(res);
+        setArticles(articles.filter(art => art.article_id !== article_id));
+        setMessage(res.data.message);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        setSpinnerOn(false);
+      });
   }
+  
 
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
