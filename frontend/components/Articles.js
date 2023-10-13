@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import PT from 'prop-types'
 
 export default function Articles({
   articles,
   getArticles,
   setCurrentArticleId,
-  deleteArticle,
-
- 
+  currentArticleId,
+  deleteArticle
 }) {
+  // ✨ where are my props? Destructure them here
 
   const navigate = useNavigate()
   const token = localStorage.getItem("token")
-  // ✨ where are my props? Destructure them here
-
-  
 
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
@@ -27,9 +24,6 @@ export default function Articles({
       navigate('/');
     }
   },[])
-
-
-  
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
@@ -48,9 +42,8 @@ export default function Articles({
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button onClick={() => setCurrentArticleId(art)}>Edit</button>
+                <button onClick={() => setCurrentArticleId(art)}>Edit</button>
                   <button onClick={() => deleteArticle(art.article_id)}>Delete</button>
-
                 </div>
               </div>
             )
