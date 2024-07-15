@@ -84,3 +84,5 @@ You must also also test the Spinner component in this module:
 ## MVP Short Explanation
 
 ❗ ALL TESTS MUST PASS
+
+//completed
